@@ -24,9 +24,9 @@ public abstract class BaseEnemy : MonoBehaviour
 
     public GameObject explosionPrefab;
 
-    public event Action<BaseEnemy, int> OnHPChanged;
-    public event Action<BaseEnemy> OnDead;
-    public event Action<int> OnDefeated;
+    public event Action<BaseEnemy, int> OnHPChanged; //HPのUI
+    public event Action<BaseEnemy> OnDead; //死亡処理
+    public event Action<int> OnDefeated;　 //敵を倒した時のスコア加算
 
     protected Animator animator;
     private int sortingOrderOffset = 200;
@@ -38,7 +38,7 @@ public abstract class BaseEnemy : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         health = healthMax;
-        OnHPChanged?.Invoke(this, health);
+        OnHPChanged?.Invoke(this, health);　 // 初期HPをUIに通知
 
         SpriteRenderer mainRenderer = GetComponent<SpriteRenderer>();
         if (mainRenderer != null)
@@ -60,12 +60,12 @@ public abstract class BaseEnemy : MonoBehaviour
     public virtual void TakeDamage(Damage amount)
     {
         health -= amount.dmg;
-        OnHPChanged?.Invoke(this, health);
+        OnHPChanged?.Invoke(this, health);　 // HPのUIを更新
 
         if (health <= 0)
         {
-            OnDead?.Invoke(this);
-            OnDefeated?.Invoke(scoreValue);
+            OnDead?.Invoke(this);　 // 死亡処理を通知
+            OnDefeated?.Invoke(scoreValue);　 // 敵を倒した時のスコア加算
             Die();
         }
     }
@@ -74,7 +74,7 @@ public abstract class BaseEnemy : MonoBehaviour
         this.healthMax = healthMax;
         this.speed = speed;
         health = healthMax;
-        OnHPChanged?.Invoke(this, health);
+        OnHPChanged?.Invoke(this, health);　 // 初期HPをUIに通知
     }
 
     protected virtual void Die()

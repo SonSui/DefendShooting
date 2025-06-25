@@ -78,6 +78,7 @@ public class EnemyManager : MonoBehaviour
         elapsedTime += Time.deltaTime;
         if (!isBoss)
         {
+            // 外部ファイルからのスポーンデータを使用して敵をスポーン
             while (nextIndex < spawnList.Count && spawnList[nextIndex].time * currentTimeRate  + offsetTime <= elapsedTime)
             {
                 SpawnEnemy(spawnList[nextIndex]);
@@ -97,6 +98,7 @@ public class EnemyManager : MonoBehaviour
 
     void LoadSpawnTable()
     {
+        // 外部ファイルからスポーンデータを読み込む
         string path = Path.Combine(Application.streamingAssetsPath, "enemyTable.txt");
 
         if (!File.Exists(path))
@@ -121,9 +123,10 @@ public class EnemyManager : MonoBehaviour
             spawnList.Add(data);
         }
     }
-
+    
     void SpawnEnemy(SpawnData data)
     {
+        // 指定されたタイプの敵をスポーン
         if (enemyTypeDict.TryGetValue(data.type.ToUpper(), out GameObject prefab))
         {
             Vector2 spawnPos = data.pos;
@@ -132,7 +135,8 @@ public class EnemyManager : MonoBehaviour
             if (baseEnemy != null)
             {
                 baseEnemy.SetEnemyStatus(Mathf.RoundToInt(baseEnemy.GetHealthMax() * currentLifeRate), baseEnemy.GetSpeed() * currentSpeedRate);
-                EnemyUIManager.instance.RegisterEnemy(baseEnemy);
+                EnemyUIManager.instance?.RegisterEnemy(baseEnemy); // 敵のHP表示を登録
+                // 敵が倒されたときのイベントを登録
                 baseEnemy.OnDefeated += (score) =>
                 {
                     ScoreManager.Instance.AddScore(score);

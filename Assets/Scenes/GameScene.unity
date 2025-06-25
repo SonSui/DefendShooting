@@ -938,6 +938,10 @@ MonoBehaviour:
   enemyTypes:
   - type: A
     prefab: {fileID: 5300638587837692711, guid: 294f7d108643fbf4282baadfe58d33eb, type: 3}
+  - type: B
+    prefab: {fileID: 5300638587837692711, guid: 294f7d108643fbf4282baadfe58d33eb, type: 3}
+  - type: jokhl
+    prefab: {fileID: 5300638587837692711, guid: 294f7d108643fbf4282baadfe58d33eb, type: 3}
   MAX_LIFE_RATE: 2
   MAX_SPEED_RATE: 3
   MIN_TIME_RATE: 0.1

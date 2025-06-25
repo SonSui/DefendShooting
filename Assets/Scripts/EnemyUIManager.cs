@@ -10,12 +10,13 @@ public class EnemyUIManager : MonoBehaviour
 
     public static EnemyUIManager instance;
 
+    // 敵のHP表示用のエントリを管理するクラス
     private class Entry
     {
         public BaseEnemy enemy;
         public TextMeshProUGUI text;
     }
-
+    // 敵のHP表示用のエントリのリスト
     private readonly List<Entry> entries = new();
 
     void Awake()
@@ -33,6 +34,7 @@ public class EnemyUIManager : MonoBehaviour
 
     void Update()
     {
+        // 画面上の敵のHP表示を更新
         foreach (var entry in entries)
         {
             if (entry.enemy == null) continue;
@@ -49,13 +51,16 @@ public class EnemyUIManager : MonoBehaviour
         var text = go.GetComponent<TextMeshProUGUI>();
 
         Entry entry = new Entry { enemy = enemy, text = text };
+        // 敵のHP表示をエントリに追加
         entries.Add(entry);
 
+        // 敵の位置にHP表示を配置
         enemy.OnHPChanged += (e, hp) =>
         {
             text.text = hp.ToString();
         };
 
+        // 敵が死亡したときにHP表示を削除
         enemy.OnDead += (e) =>
         {
             text.text = "";
