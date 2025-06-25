@@ -1,4 +1,5 @@
 Made with Unity 6000.0.46f1
+Development Time: Approximately 5 hours
 
 This is a practice project using Unity's Event system.  
 The main scripts that utilize the Event system are:
